@@ -6,4 +6,3 @@ package-lock.json
 yarn.lock
 vite.config.js.timestamp-*
 .test-output
-new-add-on/
