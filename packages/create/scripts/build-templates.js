@@ -99,9 +99,9 @@ async function generate_templates(dist, shared) {
 				// TODO JYC (maybe could be a dev mode and prod mode ?)
 				const pkg = JSON.parse(contents);
 				if (pkg.dependencies && pkg.dependencies['@sveltejs/cli-core'])
-					pkg.dependencies['@sveltejs/cli-core'] = 'file:../packages/core';
+					pkg.dependencies['@sveltejs/cli-core'] = 'file:../../packages/core';
 				if (pkg.devDependencies && pkg.devDependencies['sv'])
-					pkg.devDependencies['sv'] = 'file:../packages/cli';
+					pkg.devDependencies['sv'] = 'file:../../packages/cli';
 				contents = JSON.stringify(pkg, null, '\t');
 
 				fs.writeFileSync(path.join(dir, 'package.json'), contents);
