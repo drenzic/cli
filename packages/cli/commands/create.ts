@@ -66,6 +66,9 @@ export const create = new Command('create')
 				cwd,
 				options
 			);
+
+			common.logArgs('create', argsFormatted);
+
 			const highlight = (str: string) => pc.bold(pc.cyan(str));
 
 			let i = 1;
@@ -104,8 +107,6 @@ export const create = new Command('create')
 			steps.push('', `Stuck? Visit us at ${pc.cyan('https://svelte.dev/chat')}`);
 
 			p.note(steps.join('\n'), "What's next?", { format: (line) => line });
-
-			return { actionName: 'create', argsFormatted };
 		});
 	});
 

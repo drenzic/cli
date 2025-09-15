@@ -197,7 +197,7 @@ export const add = new Command('add')
 				p.note(nextSteps.join('\n'), 'Next steps', { format: (line) => line });
 			}
 
-			return { actionName: 'add', argsFormatted };
+			common.logArgs('add', argsFormatted);
 		});
 	});
 
@@ -487,7 +487,11 @@ export async function runAddCommand(
 
 		for (const [questionId, question] of Object.entries(addon.options)) {
 			const shouldAsk = question.condition?.(values);
-			if (shouldAsk === false || values[questionId] !== undefined) continue;
+			if (shouldAsk === false) continue;
+			if (values[questionId] !== undefined) {
+				addonArgsFormatted.push(`${questionId}:${values[questionId]}`);
+				continue;
+			}
 
 			let answer;
 			const message = questionPrefix + question.question;
