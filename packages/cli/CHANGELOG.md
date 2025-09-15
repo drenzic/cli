@@ -1,5 +1,47 @@
 # sv
 
+## 0.9.5
+### Patch Changes
+
+
+- feat(cli): create projects from the svelte playground with `npx sv create --from-playground <url>` ([#662](https://github.com/sveltejs/cli/pull/662))
+
+
+- chore(cli): speedup internal tests ([#698](https://github.com/sveltejs/cli/pull/698))
+
+
+- chore(core): streamline object helpers ([#685](https://github.com/sveltejs/cli/pull/685))
+
+
+- fix(eslint): update eslint to `^9.22.0` and use `defineConfig` from `eslint/config` _(to fix a deprecation warning)_ ([#712](https://github.com/sveltejs/cli/pull/712))
+
+
+- fix(eslint): add `@types/node` in devDependencies ([#711](https://github.com/sveltejs/cli/pull/711))
+
+## 0.9.4
+### Patch Changes
+
+
+- chore(addons): change some dependencies to devDependencies ([#682](https://github.com/sveltejs/cli/pull/682))
+
+
+- fix(add): allow passing add-on as argument that depends on another add-on ([#691](https://github.com/sveltejs/cli/pull/691))
+
+
+- fix: improve add-on option types ([#692](https://github.com/sveltejs/cli/pull/692))
+
+## 0.9.3
+### Patch Changes
+
+
+- chore(core): change `defineAddonOptions({ /*config */ })` to `defineAddonOptions().add('key', { /*config */ }).build()` in order to provide better type safety. ([#686](https://github.com/sveltejs/cli/pull/686))
+
+
+- fix(migrate): allow `migrate` to run without specifying a migration arg ([#676](https://github.com/sveltejs/cli/pull/676))
+
+
+- fix(add): improve robustness of add-on args parsing ([#681](https://github.com/sveltejs/cli/pull/681))
+
 ## 0.9.2
 ### Patch Changes
 

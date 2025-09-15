@@ -26,13 +26,13 @@ type Dialect = 'mysql' | 'postgresql' | 'sqlite' | 'turso';
 let drizzleDialect: Dialect;
 let schemaPath: string;
 
-const options = defineAddonOptions({
-	demo: {
+const options = defineAddonOptions()
+	.add('demo', {
 		type: 'boolean',
 		default: true,
 		question: `Do you want to include a demo? ${colors.dim('(includes a login/register page)')}`
-	}
-});
+	})
+	.build();
 
 export default defineAddon({
 	id: 'lucia',
@@ -48,8 +48,8 @@ export default defineAddon({
 	run: ({ sv, typescript, options, kit, dependencyVersion }) => {
 		const ext = typescript ? 'ts' : 'js';
 
-		sv.dependency('@oslojs/crypto', '^1.0.1');
-		sv.dependency('@oslojs/encoding', '^1.1.0');
+		sv.devDependency('@oslojs/crypto', '^1.0.1');
+		sv.devDependency('@oslojs/encoding', '^1.1.0');
 
 		if (options.demo) {
 			// password hashing for demo
@@ -145,28 +145,20 @@ export default defineAddon({
 					imports: ['sqliteTable', 'text', 'integer']
 				});
 				js.object.overrideProperties(userAttributes, {
-					properties: {
-						id: js.common.parseExpression("text('id').primaryKey()")
-					}
+					id: js.common.parseExpression("text('id').primaryKey()")
 				});
 				if (options.demo) {
 					js.object.overrideProperties(userAttributes, {
-						properties: {
-							username: js.common.parseExpression("text('username').notNull().unique()"),
-							passwordHash: js.common.parseExpression("text('password_hash').notNull()")
-						}
+						username: js.common.parseExpression("text('username').notNull().unique()"),
+						passwordHash: js.common.parseExpression("text('password_hash').notNull()")
 					});
 				}
 				js.object.overrideProperties(sessionAttributes, {
-					properties: {
-						id: js.common.parseExpression("text('id').primaryKey()"),
-						userId: js.common.parseExpression(
-							"text('user_id').notNull().references(() => user.id)"
-						),
-						expiresAt: js.common.parseExpression(
-							"integer('expires_at', { mode: 'timestamp' }).notNull()"
-						)
-					}
+					id: js.common.parseExpression("text('id').primaryKey()"),
+					userId: js.common.parseExpression("text('user_id').notNull().references(() => user.id)"),
+					expiresAt: js.common.parseExpression(
+						"integer('expires_at', { mode: 'timestamp' }).notNull()"
+					)
 				});
 			}
 			if (drizzleDialect === 'mysql') {
@@ -175,30 +167,24 @@ export default defineAddon({
 					imports: ['mysqlTable', 'varchar', 'datetime']
 				});
 				js.object.overrideProperties(userAttributes, {
-					properties: {
-						id: js.common.parseExpression("varchar('id', { length: 255 }).primaryKey()")
-					}
+					id: js.common.parseExpression("varchar('id', { length: 255 }).primaryKey()")
 				});
 				if (options.demo) {
 					js.object.overrideProperties(userAttributes, {
-						properties: {
-							username: js.common.parseExpression(
-								"varchar('username', { length: 32 }).notNull().unique()"
-							),
-							passwordHash: js.common.parseExpression(
-								"varchar('password_hash', { length: 255 }).notNull()"
-							)
-						}
+						username: js.common.parseExpression(
+							"varchar('username', { length: 32 }).notNull().unique()"
+						),
+						passwordHash: js.common.parseExpression(
+							"varchar('password_hash', { length: 255 }).notNull()"
+						)
 					});
 				}
 				js.object.overrideProperties(sessionAttributes, {
-					properties: {
-						id: js.common.parseExpression("varchar('id', { length: 255 }).primaryKey()"),
-						userId: js.common.parseExpression(
-							"varchar('user_id', { length: 255 }).notNull().references(() => user.id)"
-						),
-						expiresAt: js.common.parseExpression("datetime('expires_at').notNull()")
-					}
+					id: js.common.parseExpression("varchar('id', { length: 255 }).primaryKey()"),
+					userId: js.common.parseExpression(
+						"varchar('user_id', { length: 255 }).notNull().references(() => user.id)"
+					),
+					expiresAt: js.common.parseExpression("datetime('expires_at').notNull()")
 				});
 			}
 			if (drizzleDialect === 'postgresql') {
@@ -207,28 +193,20 @@ export default defineAddon({
 					imports: ['pgTable', 'text', 'timestamp']
 				});
 				js.object.overrideProperties(userAttributes, {
-					properties: {
-						id: js.common.parseExpression("text('id').primaryKey()")
-					}
+					id: js.common.parseExpression("text('id').primaryKey()")
 				});
 				if (options.demo) {
 					js.object.overrideProperties(userAttributes, {
-						properties: {
-							username: js.common.parseExpression("text('username').notNull().unique()"),
-							passwordHash: js.common.parseExpression("text('password_hash').notNull()")
-						}
+						username: js.common.parseExpression("text('username').notNull().unique()"),
+						passwordHash: js.common.parseExpression("text('password_hash').notNull()")
 					});
 				}
 				js.object.overrideProperties(sessionAttributes, {
-					properties: {
-						id: js.common.parseExpression("text('id').primaryKey()"),
-						userId: js.common.parseExpression(
-							"text('user_id').notNull().references(() => user.id)"
-						),
-						expiresAt: js.common.parseExpression(
-							"timestamp('expires_at', { withTimezone: true, mode: 'date' }).notNull()"
-						)
-					}
+					id: js.common.parseExpression("text('id').primaryKey()"),
+					userId: js.common.parseExpression("text('user_id').notNull().references(() => user.id)"),
+					expiresAt: js.common.parseExpression(
+						"timestamp('expires_at', { withTimezone: true, mode: 'date' }).notNull()"
+					)
 				});
 			}
 
