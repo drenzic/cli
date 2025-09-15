@@ -9,11 +9,14 @@ We follow the standard fork-based workflow:
 3. **Create a new branch** for your change:  
    `git checkout -b your-feature-name`
 4. **Commit and push** your changes to your branch.
-5. **Open a pull request** from your branch to the `main` branch of this repository.
+5. **Add a changelog entry** for your change:  
+   `pnpm changeset` _(and follow the prompts)_
+6. **Open a pull request** from your branch to the `main` branch of this repository.
 
 Please keep your pull requests focused to feature or issue. Focused smaller changes are easier to review and faster to merge.
 
 ## Preparing
+
 This is a monorepo, meaning the repo holds multiple packages. It requires the use of [pnpm](https://pnpm.io/). You can [install pnpm](https://pnpm.io/installation) with:
 
 ```sh
@@ -31,20 +34,24 @@ pnpm install
 ```
 
 ## Build and run
+
 To build the project and all packages. Run the 'build' script:
 
 ```sh
 # from root of project
 pnpm build
 ```
+
 This outputs into /packages/PACKAGE/dist/.
 
 Run the 'cli' package:
+
 ```sh
 pnpm sv
 ```
 
 Run build with watch mode:
+
 ```sh
 pnpm dev
 ```
@@ -54,28 +61,33 @@ pnpm dev
 For each add-on we have integration tests setup. These install the deps, build the app, run the dev server and then run a few small snippets against the add-on to see if the changes introduced by the add-on are working as expected.
 
 Run all tests:
+
 ```sh
 # from root of project
 pnpm test
 ```
 
 Run tests with vitest ui:
+
 ```sh
 # from root of project
 pnpm test:ui
 ```
 
 Run package specific tests by specifying a project flag to the package and running the test command. Eg:
+
 ```sh
 pnpm test --project core # addons / create / migrate / etc.
 ```
 
 To run a individual test. `cd` into the package. Run the local `test` script to that package, with a path arg to the individual piece you want tested. Eg:
+
 ```sh
 pnpm test [path-to-test]
 ```
 
 To debug a failing test. A good starting point is to `cd` into the failing tests dir. Proceed to `build` it. Then `preview` it. From here you will have increased information to help in the debug process. Eg:
+
 ```sh
 # Each test is a standalone app
 cd .test-output/addons/[addon-test]/[test-id]
@@ -91,32 +103,41 @@ There are a few guidelines we follow:
 
 - Ensure `pnpm lint` and `pnpm check` pass. You can run `pnpm format` to format the code
 - linting
+
 ```sh
 # from root of project
 pnpm lint
 ```
+
 - formatting
+
 ```sh
 # from root of project
 pnpm format
 ```
+
 - type checking
+
 ```sh
 # from root of project
 pnpm check
 ```
 
 ## svelte-migrate
+
 To run svelte-migrate locally:
+
 ```sh
 # from root of project
-node ./packages/migrate/bin.js 
+node ./packages/migrate/bin.js
 ```
 
 ## Generating changelogs
-Only publish a change set if it is in 'sv' or 'svelte-migrate' as all other packages are bundled. 
+
+Only publish a change set if it is in 'sv' or 'svelte-migrate' as all other packages are bundled.
 For changes to be reflected in package changelogs:
+
 ```sh
 # from root of project
-pnpm changeset:publish
+pnpm changeset
 ```
